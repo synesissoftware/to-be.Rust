@@ -308,6 +308,112 @@ mod implement_Truthy_for_str {
     }
 }
 
+#[cfg(feature = "implement-Truthy-for-CStr")]
+#[allow(non_snake_case)]
+mod implement_Truthy_for_CStr {
+    use super::Truthy;
+    use std::ffi::CStr;
+
+    impl Truthy for CStr {
+        fn is_truthy(&self) -> Option<bool> {
+            match self.to_str() {
+                Err(_) => None,
+                Ok(c) => {
+                    super::string_is_truthy(c)
+                }
+            }
+        }
+    }
+
+    impl Truthy for &CStr {
+        fn is_truthy(&self) -> Option<bool> {
+            match self.to_str() {
+                Err(_) => None,
+                Ok(c) => {
+                    super::string_is_truthy(c)
+                }
+            }
+        }
+    }
+}
+
+#[cfg(feature = "implement-Truthy-for-CString")]
+#[allow(non_snake_case)]
+mod implement_Truthy_for_CString {
+    use super::Truthy;
+    use std::ffi::CString;
+
+    impl Truthy for CString {
+        fn is_truthy(&self) -> Option<bool> {
+            match self.to_str() {
+                Err(_) => None,
+                Ok(c) => {
+                    super::string_is_truthy(c)
+                }
+            }
+        }
+    }
+
+    impl Truthy for &CString {
+        fn is_truthy(&self) -> Option<bool> {
+            match self.to_str() {
+                Err(_) => None,
+                Ok(c) => {
+                    super::string_is_truthy(c)
+                }
+            }
+        }
+    }
+}
+
+#[cfg(feature = "implement-Truthy-for-OsStr")]
+#[allow(non_snake_case)]
+mod implement_Truthy_for_OsStr {
+    use super::Truthy;
+    use std::ffi::OsStr;
+
+    impl Truthy for OsStr {
+        fn is_truthy(&self) -> Option<bool> {
+            super::os_string_is_truthy(self)
+        }
+    }
+
+    impl Truthy for &OsStr {
+        fn is_truthy(&self) -> Option<bool> {
+            super::os_string_is_truthy(*self)
+        }
+    }
+}
+
+#[cfg(feature = "implement-Truthy-for-OsString")]
+#[allow(non_snake_case)]
+mod implement_Truthy_for_OsString {
+    use super::Truthy;
+    use std::ffi::OsString;
+
+    impl Truthy for OsString {
+        fn is_truthy(&self) -> Option<bool> {
+            match self.to_str() {
+                None => None,
+                Some(c) => {
+                    super::string_is_truthy(c)
+                }
+            }
+        }
+    }
+
+    impl Truthy for &OsString {
+        fn is_truthy(&self) -> Option<bool> {
+            match self.to_str() {
+                None => None,
+                Some(c) => {
+                    super::string_is_truthy(c)
+                }
+            }
+        }
+    }
+}
+
 #[cfg(feature = "implement-Truthy-for-String")]
 #[allow(non_snake_case)]
 mod implement_Truthy_for_String {
@@ -520,7 +626,184 @@ mod tests {
             feature = "implement-Truthy-for-str",
         ))]
         use super::super::Truthy as _;
+        #[cfg(feature = "implement-Truthy-for-CString")]
+        use std::ffi::CString;
+        #[cfg(feature = "implement-Truthy-for-OsString")]
+        use std::ffi::OsString;
 
+
+        #[cfg(feature = "implement-Truthy-for-CString")]
+        #[test]
+        fn TEST_CString_Truthy() {
+            // is_falsey
+            {
+                assert_eq!(false, CString::new("").unwrap().is_falsey());
+                assert_eq!(false, CString::new("Copyright ©").unwrap().is_falsey());
+
+                assert_eq!(true, CString::new("0").unwrap().is_falsey());
+                assert_eq!(true, CString::new("false").unwrap().is_falsey());
+                assert_eq!(true, CString::new(" FALSE").unwrap().is_falsey());
+                assert_eq!(true, CString::new("False").unwrap().is_falsey());
+                assert_eq!(true, CString::new("FaLSe").unwrap().is_falsey());
+                assert_eq!(true, CString::new("no").unwrap().is_falsey());
+                assert_eq!(true, CString::new("No ").unwrap().is_falsey());
+                assert_eq!(true, CString::new("NO").unwrap().is_falsey());
+                assert_eq!(true, CString::new(" Off ").unwrap().is_falsey());
+                assert_eq!(true, CString::new("off").unwrap().is_falsey());
+                assert_eq!(true, CString::new("OFF").unwrap().is_falsey());
+
+                assert_eq!(false, CString::new("1").unwrap().is_falsey());
+                assert_eq!(false, CString::new("true").unwrap().is_falsey());
+                assert_eq!(false, CString::new("TRUE").unwrap().is_falsey());
+                assert_eq!(false, CString::new("True").unwrap().is_falsey());
+                assert_eq!(false, CString::new("tRuE").unwrap().is_falsey());
+                assert_eq!(false, CString::new("yes").unwrap().is_falsey());
+                assert_eq!(false, CString::new(" YES").unwrap().is_falsey());
+                assert_eq!(false, CString::new("Yes   ").unwrap().is_falsey());
+                assert_eq!(false, CString::new("yEs").unwrap().is_falsey());
+            }
+
+            // is_truey
+            {
+                assert_eq!(false, CString::new("").unwrap().is_truey());
+                assert_eq!(false, CString::new("Copyright ©").unwrap().is_truey());
+
+                assert_eq!(false, CString::new("0").unwrap().is_truey());
+                assert_eq!(false, CString::new("false").unwrap().is_truey());
+                assert_eq!(false, CString::new(" FALSE").unwrap().is_truey());
+                assert_eq!(false, CString::new("False").unwrap().is_truey());
+                assert_eq!(false, CString::new("FaLSe").unwrap().is_truey());
+                assert_eq!(false, CString::new("no").unwrap().is_truey());
+                assert_eq!(false, CString::new("No ").unwrap().is_truey());
+                assert_eq!(false, CString::new("NO").unwrap().is_truey());
+                assert_eq!(false, CString::new(" Off ").unwrap().is_truey());
+                assert_eq!(false, CString::new("off").unwrap().is_truey());
+                assert_eq!(false, CString::new("OFF").unwrap().is_truey());
+
+                assert_eq!(true, CString::new("1").unwrap().is_truey());
+                assert_eq!(true, CString::new("true").unwrap().is_truey());
+                assert_eq!(true, CString::new("TRUE").unwrap().is_truey());
+                assert_eq!(true, CString::new("True").unwrap().is_truey());
+                assert_eq!(true, CString::new("tRuE").unwrap().is_truey());
+                assert_eq!(true, CString::new("yes").unwrap().is_truey());
+                assert_eq!(true, CString::new(" YES").unwrap().is_truey());
+                assert_eq!(true, CString::new("Yes   ").unwrap().is_truey());
+                assert_eq!(true, CString::new("yEs").unwrap().is_truey());
+            }
+
+            // is_truthy
+            {
+                assert_eq!(None, CString::new("").unwrap().is_truthy());
+                assert_eq!(None, CString::new("Copyright ©").unwrap().is_truthy());
+
+                assert_eq!(Some(false), CString::new("0").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("false").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new(" FALSE").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("False").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("FaLSe").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("no").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("No ").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("NO").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new(" Off ").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("off").unwrap().is_truthy());
+                assert_eq!(Some(false), CString::new("OFF").unwrap().is_truthy());
+
+                assert_eq!(Some(true), CString::new("1").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("true").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("TRUE").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("True").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("tRuE").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("yes").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new(" YES").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("Yes   ").unwrap().is_truthy());
+                assert_eq!(Some(true), CString::new("yEs").unwrap().is_truthy());
+            }
+        }
+
+        #[cfg(feature = "implement-Truthy-for-OsString")]
+        #[test]
+        fn TEST_OsString_Truthy() {
+            // is_falsey
+            {
+                assert_eq!(false, OsString::from("").is_falsey());
+
+                assert_eq!(true, OsString::from("0").is_falsey());
+                assert_eq!(true, OsString::from("false").is_falsey());
+                assert_eq!(true, OsString::from(" FALSE").is_falsey());
+                assert_eq!(true, OsString::from("False").is_falsey());
+                assert_eq!(true, OsString::from("FaLSe").is_falsey());
+                assert_eq!(true, OsString::from("no").is_falsey());
+                assert_eq!(true, OsString::from("No ").is_falsey());
+                assert_eq!(true, OsString::from("NO").is_falsey());
+                assert_eq!(true, OsString::from(" Off ").is_falsey());
+                assert_eq!(true, OsString::from("off").is_falsey());
+                assert_eq!(true, OsString::from("OFF").is_falsey());
+
+                assert_eq!(false, OsString::from("1").is_falsey());
+                assert_eq!(false, OsString::from("true").is_falsey());
+                assert_eq!(false, OsString::from("TRUE").is_falsey());
+                assert_eq!(false, OsString::from("True").is_falsey());
+                assert_eq!(false, OsString::from("tRuE").is_falsey());
+                assert_eq!(false, OsString::from("yes").is_falsey());
+                assert_eq!(false, OsString::from(" YES").is_falsey());
+                assert_eq!(false, OsString::from("Yes   ").is_falsey());
+                assert_eq!(false, OsString::from("yEs").is_falsey());
+            }
+
+            // is_truey
+            {
+                assert_eq!(false, OsString::from("").is_truey());
+
+                assert_eq!(false, OsString::from("0").is_truey());
+                assert_eq!(false, OsString::from("false").is_truey());
+                assert_eq!(false, OsString::from(" FALSE").is_truey());
+                assert_eq!(false, OsString::from("False").is_truey());
+                assert_eq!(false, OsString::from("FaLSe").is_truey());
+                assert_eq!(false, OsString::from("no").is_truey());
+                assert_eq!(false, OsString::from("No ").is_truey());
+                assert_eq!(false, OsString::from("NO").is_truey());
+                assert_eq!(false, OsString::from(" Off ").is_truey());
+                assert_eq!(false, OsString::from("off").is_truey());
+                assert_eq!(false, OsString::from("OFF").is_truey());
+
+                assert_eq!(true, OsString::from("1").is_truey());
+                assert_eq!(true, OsString::from("true").is_truey());
+                assert_eq!(true, OsString::from("TRUE").is_truey());
+                assert_eq!(true, OsString::from("True").is_truey());
+                assert_eq!(true, OsString::from("tRuE").is_truey());
+                assert_eq!(true, OsString::from("yes").is_truey());
+                assert_eq!(true, OsString::from(" YES").is_truey());
+                assert_eq!(true, OsString::from("Yes   ").is_truey());
+                assert_eq!(true, OsString::from("yEs").is_truey());
+            }
+
+            // is_truthy
+            {
+                assert_eq!(None, OsString::from("").is_truthy());
+
+                assert_eq!(Some(false), OsString::from("0").is_truthy());
+                assert_eq!(Some(false), OsString::from("false").is_truthy());
+                assert_eq!(Some(false), OsString::from(" FALSE").is_truthy());
+                assert_eq!(Some(false), OsString::from("False").is_truthy());
+                assert_eq!(Some(false), OsString::from("FaLSe").is_truthy());
+                assert_eq!(Some(false), OsString::from("no").is_truthy());
+                assert_eq!(Some(false), OsString::from("No ").is_truthy());
+                assert_eq!(Some(false), OsString::from("NO").is_truthy());
+                assert_eq!(Some(false), OsString::from(" Off ").is_truthy());
+                assert_eq!(Some(false), OsString::from("off").is_truthy());
+                assert_eq!(Some(false), OsString::from("OFF").is_truthy());
+
+                assert_eq!(Some(true), OsString::from("1").is_truthy());
+                assert_eq!(Some(true), OsString::from("true").is_truthy());
+                assert_eq!(Some(true), OsString::from("TRUE").is_truthy());
+                assert_eq!(Some(true), OsString::from("True").is_truthy());
+                assert_eq!(Some(true), OsString::from("tRuE").is_truthy());
+                assert_eq!(Some(true), OsString::from("yes").is_truthy());
+                assert_eq!(Some(true), OsString::from(" YES").is_truthy());
+                assert_eq!(Some(true), OsString::from("Yes   ").is_truthy());
+                assert_eq!(Some(true), OsString::from("yEs").is_truthy());
+            }
+        }
 
         #[cfg(feature = "implement-Truthy-for-String")]
         #[test]

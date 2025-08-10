@@ -34,6 +34,10 @@
 	"rust-analyzer.cargo.features": [
 		// "implement-Truthy-for-AsStr",
 		"implement-Truthy-for-bool",
+		"implement-Truthy-for-CsStr",
+		"implement-Truthy-for-CsString",
+		"implement-Truthy-for-OsStr",
+		"implement-Truthy-for-OsString",
 		"implement-Truthy-for-str",
 		"implement-Truthy-for-String",
 	],

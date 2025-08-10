@@ -1,5 +1,10 @@
 # **to-be.Rust** Changes
 
+## 0.0.5 - 10th August 2025
+
+* added conditional-support for `CStr`, `CString`, `OsStr`, `OsString`;
+
+
 ## 0.0.4 - 10th August 2025
 
 * expanded and improved implementations of `Truthy` trait;

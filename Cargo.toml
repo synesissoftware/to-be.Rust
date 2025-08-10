@@ -26,7 +26,7 @@ keywords = [
 license = "BSD-3-Clause"
 name = "to-be"
 repository = "https://github.com/synesissoftware/to-be.Rust"
-version = "0.0.4"
+version = "0.0.5"
 
 
 # ##########################################################
@@ -41,6 +41,10 @@ version = "0.0.4"
 default = [
 	# "implement-Truthy-for-AsStr",
 	"implement-Truthy-for-bool",
+	# "implement-Truthy-for-CStr",
+	# "implement-Truthy-for-CString",
+	# "implement-Truthy-for-OsStr",
+	# "implement-Truthy-for-OsString",
 	"implement-Truthy-for-str",
 	"implement-Truthy-for-String",
 ]
@@ -57,11 +61,19 @@ null-feature = []
 #
 # "implement-Truthy-for-AsStr" - implements `Truthy` for all types that implement `AsStr`. NOTE: this is incompatible with the other features that pertain to concrete types;
 # "implement-Truthy-for-bool" - implements `Truthy` for `bool` type;
+# "implement-Truthy-for-CStr" - implements `Truthy` for `CStr` type;
+# "implement-Truthy-for-CString" - implements `Truthy` for `CString` type;
+# "implement-Truthy-for-OsStr" - implements `Truthy` for `OsStr` type;
+# "implement-Truthy-for-OsString" - implements `Truthy` for `OsString` type;
 # "implement-Truthy-for-str" - implements `Truthy` for `&str` type;
 # "implement-Truthy-for-String" - implements `Truthy` for `String` type;
 
 implement-Truthy-for-AsStr = []
 implement-Truthy-for-bool = []
+implement-Truthy-for-CStr = []
+implement-Truthy-for-CString = []
+implement-Truthy-for-OsStr = []
+implement-Truthy-for-OsString = []
 implement-Truthy-for-str = []
 implement-Truthy-for-String = []
 
