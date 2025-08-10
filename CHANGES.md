@@ -1,5 +1,10 @@
 # **to-be.Rust** Changes
 
+## 0.0.4 - 10th August 2025
+
+* expanded and improved implementations of `Truthy` trait;
+
+
 ## 0.0.3 - 10th August 2025
 
 * clippy;

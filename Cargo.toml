@@ -26,7 +26,7 @@ keywords = [
 license = "BSD-3-Clause"
 name = "to-be"
 repository = "https://github.com/synesissoftware/to-be.Rust"
-version = "0.0.3"
+version = "0.0.4"
 
 
 # ##########################################################
@@ -39,6 +39,10 @@ version = "0.0.3"
 [features]
 
 default = [
+	# "implement-Truthy-for-AsStr",
+	"implement-Truthy-for-bool",
+	"implement-Truthy-for-str",
+	"implement-Truthy-for-String",
 ]
 
 
@@ -51,6 +55,15 @@ null-feature = []
 
 # Crate-specific features:
 #
+# "implement-Truthy-for-AsStr" - implements `Truthy` for all types that implement `AsStr`. NOTE: this is incompatible with the other features that pertain to concrete types;
+# "implement-Truthy-for-bool" - implements `Truthy` for `bool` type;
+# "implement-Truthy-for-str" - implements `Truthy` for `&str` type;
+# "implement-Truthy-for-String" - implements `Truthy` for `String` type;
+
+implement-Truthy-for-AsStr = []
+implement-Truthy-for-bool = []
+implement-Truthy-for-str = []
+implement-Truthy-for-String = []
 
 
 # ##########################################################
