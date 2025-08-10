@@ -1,5 +1,10 @@
 # **to-be.Rust** Changes
 
+## 0.0.3 - 10th August 2025
+
+* clippy;
+
+
 ## 0.0.2 - 10th August 2025
 
 * added `#is_truthy()` to `Truthy` trait;

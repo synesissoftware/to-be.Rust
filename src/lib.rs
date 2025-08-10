@@ -5,6 +5,7 @@ use base_traits::AsStr;
 
 #[rustfmt::skip]
 mod constants {
+    #![allow(clippy::redundant_static_lifetimes)]
 
     // NOTE: `FALSEY_PRECISE_STRINGS` and `TRUEY_PRECISE_STRINGS` must be in sorted order as
     // they are consumed in binary search; the others in most-likely order.
@@ -107,10 +108,10 @@ fn string_is_truthy_with_(
             truey_precise_strings,
             ..
         } => {
-            if falsey_precise_strings.iter().any(|&f| f == s) {
+            if falsey_precise_strings.contains(&s) {
                 return Some(false);
             }
-            if truey_precise_strings.iter().any(|&f| f == s) {
+            if truey_precise_strings.contains(&s) {
                 return Some(true);
             }
         },
