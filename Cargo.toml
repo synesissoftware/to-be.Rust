@@ -1,0 +1,70 @@
+# ##########################################################
+# Package
+
+[package]
+
+authors = [
+	"Matt Wilson <matthew@synesis.com.au>",
+]
+categories = [
+	"config",
+	"encoding",
+	"no-std",
+	"parsing",
+	"text-processing",
+]
+description = "Simple Rust library determining whether strings indicate truey or falsy values"
+documentation = "https://github.com/synesissoftware/to-be.Rust/README.md"
+edition = "2021"
+homepage = "https://github.com/synesissoftware/to-be.Rust"
+keywords = [
+	"configuration",
+	"environment",
+	"string",
+	"traits",
+]
+license = "BSD-3-Clause"
+name = "to-be"
+repository = "https://github.com/synesissoftware/to-be.Rust"
+version = "0.0.1"
+
+
+# ##########################################################
+# Targets
+
+
+# ##########################################################
+# Features
+
+[features]
+
+default = [
+]
+
+
+# General features:
+#
+# - "null-feature" - a feature that has no effect (and, thus, is useful for simplifying driver scripts);
+
+null-feature = []
+
+
+# Crate-specific features:
+#
+
+
+# ##########################################################
+# Dependencies
+
+[dependencies]
+
+base-traits = { version = "0", default-features = false, features = [
+	"implement-AsStr-for-built_ins",
+]}
+
+
+[dev-dependencies]
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
