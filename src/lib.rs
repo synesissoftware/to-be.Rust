@@ -62,8 +62,8 @@ pub enum Terms<'a> {
     Strings {
         falsey_precise_strings :   &'a [&'a str],
         falsey_lowercase_strings : &'a [&'a str],
-        truey_precise_strings :   &'a [&'a str],
-        truey_lowercase_strings : &'a [&'a str],
+        truey_precise_strings :    &'a [&'a str],
+        truey_lowercase_strings :  &'a [&'a str],
     },
 }
 
@@ -102,24 +102,28 @@ fn string_is_truthy_with_(
                 return Some(true);
             }
         },
-        Terms::Strings { falsey_precise_strings, truey_precise_strings, .. } => {
+        Terms::Strings {
+            falsey_precise_strings,
+            truey_precise_strings,
+            ..
+        } => {
             if falsey_precise_strings.iter().any(|&f| f == s) {
                 return Some(false);
             }
             if truey_precise_strings.iter().any(|&f| f == s) {
                 return Some(true);
             }
-        }
+        },
     };
 
     let l = s.to_ascii_lowercase();
     let (falsey_lowercase_strings, truey_lowercase_strings) = match terms {
-        Terms::Default => {
-            (stock_falsey_lowercase_strings, stock_truey_lowercase_strings)
-        },
-        Terms::Strings { falsey_lowercase_strings, truey_lowercase_strings, .. } => {
-            (falsey_lowercase_strings, truey_lowercase_strings)
-        }
+        Terms::Default => (stock_falsey_lowercase_strings, stock_truey_lowercase_strings),
+        Terms::Strings {
+            falsey_lowercase_strings,
+            truey_lowercase_strings,
+            ..
+        } => (falsey_lowercase_strings, truey_lowercase_strings),
     };
 
     if falsey_lowercase_strings.iter().any(|&f| f == l) {
@@ -130,6 +134,19 @@ fn string_is_truthy_with_(
     }
 
     None
+}
+
+/// Obtain the stock term strings of the library.
+///
+/// This may be handy when you want to, say, provide your own "truey" term
+/// strings but rely on the stock "falsey" term strings.
+pub fn stock_term_strings() -> Terms<'static> {
+    Terms::Strings {
+        falsey_precise_strings :   constants::FALSEY_PRECISE_STRINGS,
+        falsey_lowercase_strings : constants::FALSEY_LOWERCASE_STRINGS,
+        truey_precise_strings :    constants::TRUEY_PRECISE_STRINGS,
+        truey_lowercase_strings :  constants::TRUEY_LOWERCASE_STRINGS,
+    }
 }
 
 /// Indicates that the given string, when trimmed, is deemed as "truey".
@@ -148,6 +165,13 @@ pub fn string_is_falsey(s : &str) -> bool {
 ///
 /// # Note:
 /// It is NOT guaranteed that `string_is_falsey(x) == !string_is_truey(x)`.
+///
+/// # Returns:
+/// - `None` - string is not classified as "truthy";
+/// - `Some(false)` - string (is classified as "truthy" and) is deemed
+///   "falsey";
+/// - `Some(true)` - string (is classified as "truthy" and) is deemed
+///   "truey";
 pub fn string_is_truey(s : &str) -> bool {
     string_is_truthy_against_(
         s,
@@ -158,6 +182,13 @@ pub fn string_is_truey(s : &str) -> bool {
 
 /// Indicates whether the given string is "truthy" and, if so, whether it is
 /// "truey" or "falsey".
+///
+/// # Returns:
+/// - `None` - string is not classified as "truthy";
+/// - `Some(false)` - string (is classified as "truthy" and) is deemed
+///   "falsey";
+/// - `Some(true)` - string (is classified as "truthy" and) is deemed
+///   "truey";
 pub fn string_is_truthy(s : &str) -> Option<bool> {
     string_is_truthy_with_(
         s,
@@ -169,6 +200,8 @@ pub fn string_is_truthy(s : &str) -> Option<bool> {
     )
 }
 
+/// Indicates whether the instance can be classed as "truthy" when evaluated
+/// against the given terms strings.
 pub fn string_is_truthy_with(
     s : &str,
     terms : Terms,
@@ -187,10 +220,15 @@ pub fn string_is_truthy_with(
 pub trait Truthy {
     /// Indicates whether the instance can be classed as "falsey".
     fn is_falsey(&self) -> bool {
-        !self.is_truey()
+        Some(false) == self.is_truthy()
     }
     /// Indicates whether the instance can be classed as "truey".
-    fn is_truey(&self) -> bool;
+    fn is_truey(&self) -> bool {
+        Some(true) == self.is_truthy()
+    }
+    /// Indicates whether the instance can be classed as "truthy", and, if
+    /// so, whether it is "truey" or "falsey".
+    fn is_truthy(&self) -> Option<bool>;
 }
 
 /// Specialisation of [Truthy] for type `T` for any type that implements
@@ -199,12 +237,8 @@ impl<T> Truthy for T
 where
     T : AsStr,
 {
-    fn is_falsey(&self) -> bool {
-        string_is_falsey(self.as_str())
-    }
-
-    fn is_truey(&self) -> bool {
-        string_is_truey(self.as_str())
+    fn is_truthy(&self) -> Option<bool> {
+        string_is_truthy(self.as_str())
     }
 }
 
@@ -345,8 +379,8 @@ mod tests {
         let terms = Terms::Strings {
             falsey_precise_strings :   FALSEY_PRECISE_STRINGS,
             falsey_lowercase_strings : FALSEY_LOWERCASE_STRINGS,
-            truey_precise_strings :   TRUEY_PRECISE_STRINGS,
-            truey_lowercase_strings : TRUEY_LOWERCASE_STRINGS,
+            truey_precise_strings :    TRUEY_PRECISE_STRINGS,
+            truey_lowercase_strings :  TRUEY_LOWERCASE_STRINGS,
         };
 
         assert_eq!(Some(false), string_is_truthy_with("Nyet", terms.clone()));

@@ -97,14 +97,13 @@ The following public functions are defined in the current version:
 pub fn string_is_falsey(s : &str) -> bool;
 pub fn string_is_truey(s : &str) -> bool;
 
-pub fn string_is_falsey_with(
+pub fn pub fn string_is_truthy(s : &str) -> Option<bool>;
+pub fn string_is_truthy_with(
     s : &str,
-    falsey_terms : Terms,
-) -> bool;
-pub fn string_is_truey_with(
-    s : &str,
-    truey_terms : Terms,
-) -> bool;
+    terms : Terms,
+) -> Option<bool>;
+
+pub fn stock_term_strings() -> Terms<'static>;
 ```
 
 
@@ -143,10 +142,15 @@ The following public traits are defined in the current version:
 pub trait Truthy {
     /// Indicates whether the instance can be classed as "falsey".
     fn is_falsey(&self) -> bool {
-        !self.is_truey()
+        Some(false) == self.is_truthy()
     }
     /// Indicates whether the instance can be classed as "truey".
-    fn is_truey(&self) -> bool;
+    fn is_truey(&self) -> bool {
+        Some(true) == self.is_truthy()
+    }
+    /// Indicates whether the instance can be classed as "truthy", and, if
+    /// so, whether it is "truey" or "falsey".
+    fn is_truthy(&self) -> Option<bool>;
 }
 ```
 
