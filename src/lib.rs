@@ -148,7 +148,7 @@ pub fn stock_term_strings() -> Terms<'static> {
     }
 }
 
-/// Indicates that the given string, when trimmed, is deemed as "truey".
+/// Indicates that the given string, when trimmed, is deemed as "falsey".
 ///
 /// # Note:
 /// It is NOT guaranteed that `string_is_falsey(x) == !string_is_truey(x)`.
@@ -160,7 +160,7 @@ pub fn string_is_falsey(s : &str) -> bool {
     )
 }
 
-/// Indicates that the given string, when trimmed, is deemed as "falsy".
+/// Indicates that the given string, when trimmed, is deemed as "truey".
 ///
 /// # Note:
 /// It is NOT guaranteed that `string_is_falsey(x) == !string_is_truey(x)`.

@@ -1,4 +1,4 @@
-# to-be <!-- omit in toc -->
+# to-be.Rust <!-- omit in toc -->
 
 Simple Rust library determining the truthyness of strings, that is whether they indicate *truey* or *falsy* values.
 
@@ -8,36 +8,6 @@ Simple Rust library determining the truthyness of strings, that is whether they 
 ## Introduction
 
 **to-be** is a library providing facilities for determine whether the truthyness of strings. It implemented in several languages: **to-be.Rust** is the **Rust** implementation.
-
-
-## Terminology
-
-The term "*truthy*" is an unhelpfully overloaded term in the programming world, insofar as it is used to refer to the notion of "truthyness" - whether something can be _deemed to be_ interpretable as truth - and also the true side of that interpretation. In this library, the former interpretation is used, leaving us with the following terms:
-
-* "*truthy*" - whether something can be can be _deemed to be_ interpretable as having truth;
-* "*falsey*" - whether an object can be _deemed to be_ interpretable as being false;
-* "*truey*" - whether an object can be _deemed to be_ interpretable as being true;
-
-For example, consider the following **Rust** program:
-
-```Rust
-let s1 = "no";
-let s2 = "True";
-let s3 = "orange";
-
-// "no" is validly truthy, and is falsey
-assert_eq!(true, s1.is_falsey());
-assert_eq!(false, s1.is_truey());
-
-// "True" is validly truthy, and is truey
-assert_eq!(false, s2.is_falsey());
-assert_eq!(true, s2.is_truey());
-
-// "orange" is not validly truthy, and is neither falsey nor truey
-assert_eq!(false, s3.is_falsey());
-assert_eq!(false, s3.is_truey());
-
-```
 
 
 ## Table of Contents <!-- omit in toc -->
@@ -61,6 +31,37 @@ assert_eq!(false, s3.is_truey());
 		- [Dev Dependencies](#dev-dependencies)
 	- [Related projects](#related-projects)
 	- [License](#license)
+
+
+## Terminology
+
+The term "*truthy*" is an unhelpfully overloaded term in the programming world, insofar as it is used to refer to the notion of "truthyness" - whether something can be _deemed to be_ interpretable as truth - and also the true side of that interpretation. In this library, the former interpretation is used, leaving us with the following terms:
+
+* "*truthy*" - whether something can be can be _deemed to be_ interpretable as having truth;
+* "*falsey*" - whether an object can be _deemed to be_ interpretable as being false;
+* "*truey*" - whether an object can be _deemed to be_ interpretable as being true;
+
+For example, consider the following **Rust** program:
+
+```Rust
+use to_be::Truthy as _;
+
+let s1 = "no";
+let s2 = "True";
+let s3 = "orange";
+
+// "no" is validly truthy, and is falsey
+assert_eq!(true, s1.is_falsey());
+assert_eq!(false, s1.is_truey());
+
+// "True" is validly truthy, and is truey
+assert_eq!(false, s2.is_falsey());
+assert_eq!(true, s2.is_truey());
+
+// "orange" is not validly truthy, and is neither falsey nor truey
+assert_eq!(false, s3.is_falsey());
+assert_eq!(false, s3.is_truey());
+```
 
 
 ## Installation
