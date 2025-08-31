@@ -1,8 +1,12 @@
 # to-be.Rust <!-- omit in toc -->
 
-Simple Rust library determining the truthyness of strings, that is whether they indicate *truey* or *falsy* values.
-
+![Language](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![GitHub release](https://img.shields.io/github/v/release/synesissoftware/to-be.Rust.svg)](https://github.com/synesissoftware/to-be.Rust/releases/latest)
+[![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/to-be.Rust)](https://github.com/synesissoftware/to-be.Rust/commits/master)
 [![Crates.io](https://img.shields.io/crates/v/to-be.svg)](https://crates.io/crates/to-be)
+
+Simple Rust library determining the truthyness of strings, that is whether they indicate *truey* or *falsy* values.
 
 
 ## Introduction
@@ -16,21 +20,21 @@ Simple Rust library determining the truthyness of strings, that is whether they 
 - [Terminology](#terminology)
 - [Installation](#installation)
 - [Components](#components)
-	- [Constants](#constants)
-	- [Enumerations](#enumerations)
-	- [Features](#features)
-	- [Functions](#functions)
-	- [Macros](#macros)
-	- [Structures](#structures)
-	- [Traits](#traits)
+  - [Constants](#constants)
+  - [Enumerations](#enumerations)
+  - [Features](#features)
+  - [Functions](#functions)
+  - [Macros](#macros)
+  - [Structures](#structures)
+  - [Traits](#traits)
 - [Examples](#examples)
 - [Project Information](#project-information)
-	- [Where to get help](#where-to-get-help)
-	- [Contribution guidelines](#contribution-guidelines)
-	- [Dependencies](#dependencies)
-		- [Dev Dependencies](#dev-dependencies)
-	- [Related projects](#related-projects)
-	- [License](#license)
+  - [Where to get help](#where-to-get-help)
+  - [Contribution guidelines](#contribution-guidelines)
+  - [Dependencies](#dependencies)
+    - [Dev Dependencies](#dev-dependencies)
+  - [Related projects](#related-projects)
+  - [License](#license)
 
 
 ## Terminology
