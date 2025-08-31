@@ -99,15 +99,25 @@ No public crate-specific features are defined at this time.
 The following public functions are defined in the current version:
 
 ```Rust
+/// Indicates that the given string, when trimmed, is deemed as "falsey".
 pub fn string_is_falsey(s : &str) -> bool;
+/// Indicates that the given string, when trimmed, is deemed as "truey".
 pub fn string_is_truey(s : &str) -> bool;
 
+/// Indicates whether the given string is "truthy" and, if so, whether it is
+/// "truey" or "falsey".
 pub fn pub fn string_is_truthy(s : &str) -> Option<bool>;
+/// Indicates whether the instance can be classed as "truthy" when evaluated
+/// against the given terms strings.
 pub fn string_is_truthy_with(
     s : &str,
     terms : Terms,
 ) -> Option<bool>;
 
+/// Obtain the stock term strings of the library.
+///
+/// This may be handy when you want to, say, provide your own "truey" term
+/// strings but rely on the stock "falsey" term strings.
 pub fn stock_term_strings() -> Terms<'static>;
 ```
 
