@@ -199,7 +199,7 @@ Crates upon which **to-be.Rust** has runtime dependencies:
 
 * [**to-be**](https://github.com/synesissoftware/to-be) (**C**);
 * [**to-be.Python**](https://github.com/synesissoftware/to-be.Python);
-* [**to-be.Ruby**](https://github.com/synesissoftware/to-be.Ruby);
+* [**to_be.Ruby**](https://github.com/synesissoftware/to_be.Ruby);
 
 
 ### License
