@@ -1,5 +1,13 @@
 # **to-be.Rust** Changes
 
+## 0.0.6 - 1st September 2025
+
+* GitHub Actions;
+* documentation;
+* badges;
+* .gitattributes;
+
+
 ## 0.0.5 - 10th August 2025
 
 * added conditional-support for `CStr`, `CString`, `OsStr`, `OsString`;
