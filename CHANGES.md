@@ -2,6 +2,8 @@
 
 ## 0.0.7 - 27th June 2025
 
+* aligned **rustfmt.toml** with **Diagnosticism.Rust** / SIS conventions;
+
 
 ## 0.0.6 - 1st September 2025
 
