@@ -1,5 +1,8 @@
 # **to-be.Rust** Changes
 
+## 0.0.7 - 27th June 2025
+
+
 ## 0.0.6 - 1st September 2025
 
 * GitHub Actions;
