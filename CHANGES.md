@@ -2,6 +2,7 @@
 
 ## 0.0.7 - 27th June 2025
 
+* added **benches/string_truthy** Criterion benchmark;
 * upgraded CI (clippy, rustfmt, MSRV job, optional-feature test matrix);
 * aligned **rustfmt.toml** with **Diagnosticism.Rust** / SIS conventions;
 

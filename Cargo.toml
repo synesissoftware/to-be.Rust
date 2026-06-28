@@ -32,6 +32,14 @@ version = "0.0.6"
 # ##########################################################
 # Targets
 
+[lib]
+name = "to_be"
+path = "src/lib.rs"
+
+[[bench]]
+name = "string_truthy"
+harness = false
+
 
 # ##########################################################
 # Features
@@ -89,6 +97,10 @@ base-traits = { version = "0", default-features = false, features = [
 
 
 [dev-dependencies]
+
+criterion = { version = "0.8", default-features = false, features = [
+	"plotters",
+] }
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
