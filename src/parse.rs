@@ -92,11 +92,10 @@ pub fn stock_term_strings() -> Terms<'static> {
 /// # Note:
 /// It is NOT guaranteed that `string_is_falsey(x) == !string_is_truey(x)`.
 pub fn string_is_falsey(s : &str) -> bool {
-    string_is_truthy_against_(
-        s,
-        stock::FALSEY_PRECISE_STRINGS,
-        stock::FALSEY_LOWERCASE_STRINGS,
-    )
+    let sorted_precise_strings = stock::FALSEY_PRECISE_STRINGS;
+    let lowercase_strings = stock::FALSEY_LOWERCASE_STRINGS;
+
+    string_is_truthy_against_(s, sorted_precise_strings, lowercase_strings)
 }
 
 /// Indicates that the given string, when trimmed, is deemed as "truey".
@@ -104,11 +103,10 @@ pub fn string_is_falsey(s : &str) -> bool {
 /// # Note:
 /// It is NOT guaranteed that `string_is_falsey(x) == !string_is_truey(x)`.
 pub fn string_is_truey(s : &str) -> bool {
-    string_is_truthy_against_(
-        s,
-        stock::TRUEY_PRECISE_STRINGS,
-        stock::TRUEY_LOWERCASE_STRINGS,
-    )
+    let sorted_precise_strings = stock::TRUEY_PRECISE_STRINGS;
+    let lowercase_strings = stock::TRUEY_LOWERCASE_STRINGS;
+
+    string_is_truthy_against_(s, sorted_precise_strings, lowercase_strings)
 }
 
 /// Indicates whether the given string is "truthy" and, if so, whether it is
