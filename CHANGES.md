@@ -2,9 +2,16 @@
 
 ## 0.0.7 - 27th June 2025
 
-* added **benches/string_truthy** Criterion benchmark;
 * upgraded CI (clippy, rustfmt, MSRV job, optional-feature test matrix);
+* added crate-level rustdoc;
 * aligned **rustfmt.toml** with **Diagnosticism.Rust** / SIS conventions;
+* added **benches/string_truthy** Criterion benchmark;
+* added **examples/truthy_strings** example program;
+* modularised implementation (`constants`, `parse`, `terms`, `truthy`, `impls`);
+* added `os_string_is_truthy()` (fixes missing symbol for `OsStr` / `OsString` features);
+* expanded tests (stock tables, `CStr`, non-UTF-8 `OsStr`, `stock_term_strings()`);
+* added compile-time error when incompatible `Truthy` implementation features are combined;
+* README and **Cargo.toml** documentation improvements;
 
 
 ## 0.0.6 - 1st September 2025

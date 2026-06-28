@@ -1,9 +1,14 @@
 // benches/string_truthy.rs : benchmarking string truthy evaluation
+//
+// Requires default Criterion features (including `plotters`; see Cargo.toml).
+// After `cargo bench`, open the grouped HTML report:
+//   open target/criterion/report/index.html
 
 #![allow(non_snake_case)]
 
 use criterion::{
     BatchSize,
+    BenchmarkId,
     Criterion,
     criterion_group,
     criterion_main,
@@ -44,54 +49,62 @@ const INPUTS : [(&str, &str); 21] = [
     ("unrecognised", "unrecognised"),
 ];
 
-fn bench_string_is_truthy(c : &mut Criterion) {
 
-    for s in INPUTS {
-        let (s, t) = s;
-
-        if t.is_empty() {
-            c.bench_function(format!("string_is_truthy/{}", s).as_str(), |b| {
-                b.iter(|| string_is_truthy(s))
-            });
-        } else {
-            c.bench_function(format!("string_is_truthy/{} - {}", s, t).as_str(), |b| {
-                b.iter(|| string_is_truthy(s))
-            });
-        }
+fn benchmark_id(
+    input : &str,
+    label : &str,
+) -> BenchmarkId {
+    if label.is_empty() {
+        BenchmarkId::from_parameter(input)
+    } else {
+        BenchmarkId::new(label, input)
     }
+}
+
+fn bench_inputs<M, C>(
+    group : &mut criterion::BenchmarkGroup<'_, M>,
+    classify : C,
+) where
+    M : criterion::measurement::Measurement,
+    C : Fn(&str) + Copy,
+{
+    for (input, label) in INPUTS {
+        group.bench_with_input(benchmark_id(input, label), input, |b, input| {
+            b.iter(|| {
+                classify(input);
+            })
+        });
+    }
+}
+
+fn bench_string_is_truthy(c : &mut Criterion) {
+    let mut group = c.benchmark_group("string_is_truthy");
+
+    bench_inputs(&mut group, |s| {
+        let _ = string_is_truthy(s);
+    });
+
+    group.finish();
 }
 
 fn bench_string_is_truey(c : &mut Criterion) {
+    let mut group = c.benchmark_group("string_is_truey");
 
-    for s in INPUTS {
-        let (s, t) = s;
+    bench_inputs(&mut group, |s| {
+        let _ = string_is_truey(s);
+    });
 
-        if t.is_empty() {
-            c.bench_function(format!("string_is_truey/{}", s).as_str(), |b| {
-                b.iter(|| string_is_truey(s))
-            });
-        } else {
-            c.bench_function(format!("string_is_truey/{} - {}", s, t).as_str(), |b| {
-                b.iter(|| string_is_truey(s))
-            });
-        }
-    }
+    group.finish();
 }
 
 fn bench_string_is_falsey(c : &mut Criterion) {
-    for s in INPUTS {
-        let (s, t) = s;
+    let mut group = c.benchmark_group("string_is_falsey");
 
-        if t.is_empty() {
-            c.bench_function(format!("string_is_falsey/{}", s).as_str(), |b| {
-                b.iter(|| string_is_falsey(s))
-            });
-        } else {
-            c.bench_function(format!("string_is_falsey/{} - {}", s, t).as_str(), |b| {
-                b.iter(|| string_is_falsey(s))
-            });
-        }
-    }
+    bench_inputs(&mut group, |s| {
+        let _ = string_is_falsey(s);
+    });
+
+    group.finish();
 }
 
 fn bench_mixed_inputs(c : &mut Criterion) {
@@ -106,7 +119,9 @@ fn bench_mixed_inputs(c : &mut Criterion) {
         "",
     ];
 
-    c.bench_function("string_is_truthy/mixed_batch", |b| {
+    let mut group = c.benchmark_group("string_is_truthy");
+
+    group.bench_function("mixed_batch", |b| {
         b.iter_batched(
             || inputs.as_slice(),
             |slice| {
@@ -117,6 +132,8 @@ fn bench_mixed_inputs(c : &mut Criterion) {
             BatchSize::SmallInput,
         )
     });
+
+    group.finish();
 }
 
 criterion_group!(
