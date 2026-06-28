@@ -310,6 +310,98 @@ mod tests {
     }
 
     #[test]
+    fn TEST_string_is_truthy_WHITESPACE_PADDED_1() {
+        macro_rules! assert_stock_truthy {
+            ($s : expr, $truthy : expr, $truey : expr, $falsey : expr) => {
+                assert_eq!($truthy, string_is_truthy($s), "string_is_truthy({:?})", $s);
+                assert_eq!($truey, string_is_truey($s), "string_is_truey({:?})", $s);
+                assert_eq!($falsey, string_is_falsey($s), "string_is_falsey({:?})", $s);
+            };
+        }
+
+        // Leading ASCII space
+        assert_stock_truthy!(" true", Some(true), true, false);
+        assert_stock_truthy!(" TRUE", Some(true), true, false);
+        assert_stock_truthy!(" True", Some(true), true, false);
+        assert_stock_truthy!(" false", Some(false), false, true);
+        assert_stock_truthy!(" FALSE", Some(false), false, true);
+        assert_stock_truthy!(" False", Some(false), false, true);
+        assert_stock_truthy!(" yes", Some(true), true, false);
+        assert_stock_truthy!(" YES", Some(true), true, false);
+        assert_stock_truthy!(" Yes", Some(true), true, false);
+        assert_stock_truthy!(" no", Some(false), false, true);
+        assert_stock_truthy!(" NO", Some(false), false, true);
+        assert_stock_truthy!(" No", Some(false), false, true);
+        assert_stock_truthy!(" on", Some(true), true, false);
+        assert_stock_truthy!(" ON", Some(true), true, false);
+        assert_stock_truthy!(" On", Some(true), true, false);
+        assert_stock_truthy!(" off", Some(false), false, true);
+        assert_stock_truthy!(" OFF", Some(false), false, true);
+        assert_stock_truthy!(" Off", Some(false), false, true);
+        assert_stock_truthy!(" 1", Some(true), true, false);
+        assert_stock_truthy!(" 0", Some(false), false, true);
+
+        // Trailing ASCII space
+        assert_stock_truthy!("true ", Some(true), true, false);
+        assert_stock_truthy!("TRUE ", Some(true), true, false);
+        assert_stock_truthy!("True ", Some(true), true, false);
+        assert_stock_truthy!("false ", Some(false), false, true);
+        assert_stock_truthy!("FALSE ", Some(false), false, true);
+        assert_stock_truthy!("False ", Some(false), false, true);
+        assert_stock_truthy!("yes ", Some(true), true, false);
+        assert_stock_truthy!("YES ", Some(true), true, false);
+        assert_stock_truthy!("Yes ", Some(true), true, false);
+        assert_stock_truthy!("no ", Some(false), false, true);
+        assert_stock_truthy!("NO ", Some(false), false, true);
+        assert_stock_truthy!("No ", Some(false), false, true);
+        assert_stock_truthy!("on ", Some(true), true, false);
+        assert_stock_truthy!("ON ", Some(true), true, false);
+        assert_stock_truthy!("On ", Some(true), true, false);
+        assert_stock_truthy!("off ", Some(false), false, true);
+        assert_stock_truthy!("OFF ", Some(false), false, true);
+        assert_stock_truthy!("Off ", Some(false), false, true);
+        assert_stock_truthy!("1 ", Some(true), true, false);
+        assert_stock_truthy!("0 ", Some(false), false, true);
+
+        // Leading and trailing ASCII space
+        assert_stock_truthy!(" true ", Some(true), true, false);
+        assert_stock_truthy!(" TRUE ", Some(true), true, false);
+        assert_stock_truthy!(" True ", Some(true), true, false);
+        assert_stock_truthy!(" false ", Some(false), false, true);
+        assert_stock_truthy!(" FALSE ", Some(false), false, true);
+        assert_stock_truthy!(" False ", Some(false), false, true);
+        assert_stock_truthy!(" yes ", Some(true), true, false);
+        assert_stock_truthy!(" YES ", Some(true), true, false);
+        assert_stock_truthy!(" Yes ", Some(true), true, false);
+        assert_stock_truthy!(" no ", Some(false), false, true);
+        assert_stock_truthy!(" NO ", Some(false), false, true);
+        assert_stock_truthy!(" No ", Some(false), false, true);
+        assert_stock_truthy!(" on ", Some(true), true, false);
+        assert_stock_truthy!(" ON ", Some(true), true, false);
+        assert_stock_truthy!(" On ", Some(true), true, false);
+        assert_stock_truthy!(" off ", Some(false), false, true);
+        assert_stock_truthy!(" OFF ", Some(false), false, true);
+        assert_stock_truthy!(" Off ", Some(false), false, true);
+        assert_stock_truthy!(" 1 ", Some(true), true, false);
+        assert_stock_truthy!(" 0 ", Some(false), false, true);
+
+        // Tab padding (trimmed before classification)
+        assert_stock_truthy!("\ttrue\t", Some(true), true, false);
+        assert_stock_truthy!("\tFALSE\t", Some(false), false, true);
+        assert_stock_truthy!("\t yes \t", Some(true), true, false);
+
+        // Mixed case with padding (lowercase-table path after trim)
+        assert_stock_truthy!(" tRuE ", Some(true), true, false);
+        assert_stock_truthy!(" FaLSe ", Some(false), false, true);
+        assert_stock_truthy!(" yEs ", Some(true), true, false);
+
+        // Unrecognised and whitespace-only inputs
+        assert_stock_truthy!(" unrecognised ", None, false, false);
+        assert_stock_truthy!("   ", None, false, false);
+        assert_stock_truthy!("\t", None, false, false);
+    }
+
+    #[test]
     fn TEST_string_is_truthy_with_1() {
         #[rustfmt::skip]
         const TRUEY_PRECISE_STRINGS : &[&str] = &[
@@ -377,6 +469,22 @@ mod tests {
         assert_eq!(None, string_is_truthy_with(" YES", terms.clone()));
         assert_eq!(None, string_is_truthy_with("Yes   ", terms.clone()));
         assert_eq!(None, string_is_truthy_with("yEs", terms.clone()));
+
+        assert_eq!(Some(false), string_is_truthy_with(" Nyet ", terms.clone()));
+        assert_eq!(Some(false), string_is_truthy_with(" NYET ", terms.clone()));
+        assert_eq!(Some(false), string_is_truthy_with(" nyET ", terms.clone()));
+        assert_eq!(Some(false), string_is_truthy_with(" nope ", terms.clone()));
+        assert_eq!(Some(false), string_is_truthy_with(" Nope ", terms.clone()));
+        assert_eq!(Some(false), string_is_truthy_with(" NOPE ", terms.clone()));
+
+        assert_eq!(Some(true), string_is_truthy_with(" Da ", terms.clone()));
+        assert_eq!(Some(true), string_is_truthy_with(" DA ", terms.clone()));
+        assert_eq!(Some(true), string_is_truthy_with(" dA ", terms.clone()));
+        assert_eq!(Some(true), string_is_truthy_with(" yup ", terms.clone()));
+        assert_eq!(Some(true), string_is_truthy_with(" Yup ", terms.clone()));
+        assert_eq!(Some(true), string_is_truthy_with(" yUp ", terms.clone()));
+
+        assert_eq!(None, string_is_truthy_with("   ", terms.clone()));
     }
 }
 

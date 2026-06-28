@@ -105,6 +105,21 @@ mod tests {
             assert_eq!(Some(true), "yEs".is_truthy());
         }
     }
+
+    #[test]
+    fn TEST_str_Truthy_whitespace_padded() {
+        assert_eq!(Some(true), " true ".is_truthy());
+        assert_eq!(true, " true ".is_truey());
+        assert_eq!(false, " true ".is_falsey());
+
+        assert_eq!(Some(false), " false ".is_truthy());
+        assert_eq!(false, " false ".is_truey());
+        assert_eq!(true, " false ".is_falsey());
+
+        assert_eq!(None, "   ".is_truthy());
+        assert_eq!(false, "   ".is_truey());
+        assert_eq!(false, "   ".is_falsey());
+    }
 }
 
 
