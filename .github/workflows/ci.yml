@@ -1,22 +1,63 @@
-name: Rust
+name: CI
 
 on:
   push:
-    branches: [ "master", "dev", "gha" ]
+    branches:
+      - master
+      - dev
+      - gha
+      - boilerplate
   pull_request:
-    branches: [ "master", "dev", "gha" ]
+    branches:
+      - master
+      - dev
+      - gha
+      - boilerplate
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
-  build:
-
+  check:
+    name: Test, Clippy, Fmt
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v4
-    - name: Build
-      run: cargo build --verbose
-    - name: Run tests
-      run: cargo test --verbose
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy
+
+      - name: Install nightly rustfmt
+        run: rustup toolchain install nightly --profile minimal --component rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: cargo test
+        run: cargo test
+
+      - name: cargo test (optional Truthy features)
+        run: >
+          cargo test --lib
+          --no-default-features
+          --features
+          "implement-Truthy-for-CStr,implement-Truthy-for-CString,implement-Truthy-for-OsStr,implement-Truthy-for-OsString"
+
+      - name: cargo clippy
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: rustfmt
+        run: RUSTFMT="$(rustup which --toolchain nightly rustfmt)" cargo fmt -- --unstable-features --check
+
+  msrv:
+    name: MSRV (1.74)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dtolnay/rust-toolchain@1.74.0
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: cargo check (library)
+        run: cargo check --lib --locked
