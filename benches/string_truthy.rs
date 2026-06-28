@@ -6,17 +6,18 @@
 
 #![allow(non_snake_case)]
 
+use to_be::{
+    string_is_falsey,
+    string_is_truey,
+    string_is_truthy,
+};
+
 use criterion::{
     criterion_group,
     criterion_main,
     BatchSize,
     BenchmarkId,
     Criterion,
-};
-use to_be::{
-    string_is_falsey,
-    string_is_truey,
-    string_is_truthy,
 };
 
 
