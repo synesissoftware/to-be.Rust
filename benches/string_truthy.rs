@@ -7,11 +7,11 @@
 #![allow(non_snake_case)]
 
 use criterion::{
+    criterion_group,
+    criterion_main,
     BatchSize,
     BenchmarkId,
     Criterion,
-    criterion_group,
-    criterion_main,
 };
 use to_be::{
     string_is_falsey,
@@ -108,6 +108,7 @@ fn bench_string_is_falsey(c : &mut Criterion) {
 }
 
 fn bench_mixed_inputs(c : &mut Criterion) {
+    #[rustfmt::skip]
     let inputs = [
         "yes",
         "no",

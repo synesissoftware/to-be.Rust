@@ -1,9 +1,9 @@
 //! Example: classify strings with the [`Truthy`] trait and free functions.
 
 use to_be::{
+    stock_term_strings,
     string_is_truthy,
     string_is_truthy_with,
-    stock_term_strings,
     Terms,
     Truthy as _,
 };
@@ -27,14 +27,14 @@ fn main() {
     if let Terms::Strings {
         falsey_precise_strings,
         falsey_lowercase_strings,
-        truey_precise_strings :   _,
-        truey_lowercase_strings : _,
+        truey_precise_strings: _,
+        truey_lowercase_strings: _,
     } = stock
     {
         let custom = Terms::Strings {
             falsey_precise_strings,
             falsey_lowercase_strings,
-            truey_precise_strings :   &["Da", "YUP"],
+            truey_precise_strings : &["Da", "YUP"],
             truey_lowercase_strings : &["da", "yup"],
         };
 

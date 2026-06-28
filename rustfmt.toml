@@ -3,6 +3,10 @@
 #
 # Requires nightly rustfmt with unstable features enabled, e.g.:
 #
+#   ./scripts/fmt
+#
+# Or:
+#
 #   RUSTFMT="$(rustup which --toolchain nightly rustfmt)" cargo fmt -- --unstable-features
 #
 # configured for cargo-fmt 1.96.0-nightly

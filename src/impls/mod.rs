@@ -21,9 +21,6 @@ compile_error!(
 #[cfg(feature = "implement-Truthy-for-AsStr")]
 #[allow(non_snake_case)]
 mod implement_Truthy_for_AsStr;
-#[cfg(feature = "implement-Truthy-for-bool")]
-#[allow(non_snake_case)]
-mod implement_Truthy_for_bool;
 #[cfg(feature = "implement-Truthy-for-CStr")]
 #[allow(non_snake_case)]
 mod implement_Truthy_for_CStr;
@@ -36,12 +33,15 @@ mod implement_Truthy_for_OsStr;
 #[cfg(feature = "implement-Truthy-for-OsString")]
 #[allow(non_snake_case)]
 mod implement_Truthy_for_OsString;
-#[cfg(feature = "implement-Truthy-for-str")]
-#[allow(non_snake_case)]
-mod implement_Truthy_for_str;
 #[cfg(feature = "implement-Truthy-for-String")]
 #[allow(non_snake_case)]
 mod implement_Truthy_for_String;
+#[cfg(feature = "implement-Truthy-for-bool")]
+#[allow(non_snake_case)]
+mod implement_Truthy_for_bool;
+#[cfg(feature = "implement-Truthy-for-str")]
+#[allow(non_snake_case)]
+mod implement_Truthy_for_str;
 
 
 // ///////////////////////////// end of file //////////////////////////// //

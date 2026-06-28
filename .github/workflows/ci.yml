@@ -47,7 +47,7 @@ jobs:
         run: cargo clippy --all-targets -- -D warnings
 
       - name: rustfmt
-        run: RUSTFMT="$(rustup which --toolchain nightly rustfmt)" cargo fmt -- --unstable-features --check
+        run: ./scripts/fmt --check
 
   msrv:
     name: MSRV (1.74)
