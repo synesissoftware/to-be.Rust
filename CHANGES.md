@@ -1,5 +1,12 @@
 # **to-be.Rust** Changes
 
+## 0.0.8 - 29th June 2026
+
+* optimised string truthiness parsing with conditional trim (leading/trailing ASCII whitespace lookahead before `trim()` on the precise-match fast path);
+* expanded unit tests for whitespace-padded stock terms (including single-digit `" 1"`, `"1 "`, and tab padding);
+* extended **benches/string_truthy** Criterion benchmarks (custom `Terms`, padded stock inputs);
+
+
 ## 0.0.7 - 27th June 2025
 
 * upgraded CI (clippy, rustfmt, MSRV job, optional-feature test matrix);

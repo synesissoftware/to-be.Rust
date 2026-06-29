@@ -5,26 +5,25 @@ use crate::{
     Terms,
 };
 
-fn conditional_trim_(s : &str) -> (
+fn conditional_trim_(
+    s : &str
+) -> (
     &str, // s
     bool, // was_trimmed
 ) {
     let l = s.len();
 
     if l > 1 {
-
         let b_0 = s.as_bytes()[0];
 
         if b_0.is_ascii_whitespace() {
-
-            return (s.trim(), true)
+            return (s.trim(), true);
         }
 
         let b_l = s.as_bytes()[l - 1];
 
         if b_l.is_ascii_whitespace() {
-
-            return (s.trim(), true)
+            return (s.trim(), true);
         }
     }
 
@@ -41,7 +40,7 @@ fn string_is_truthy_against_(
     if sorted_precise_strings.binary_search(&s).is_ok() {
         true
     } else {
-        let s = if was_trimmed { s} else { s.trim()};
+        let s = if was_trimmed { s } else { s.trim() };
         let l = s.to_ascii_lowercase();
 
         lowercase_strings.iter().any(|&f| f == l)
@@ -81,7 +80,7 @@ fn string_is_truthy_with_(
         },
     };
 
-    let s = if was_trimmed { s} else { s.trim()};
+    let s = if was_trimmed { s } else { s.trim() };
     let l = s.to_ascii_lowercase();
     let (falsey_lowercase_strings, truey_lowercase_strings) = match terms {
         Terms::Default => (stock_falsey_lowercase_strings, stock_truey_lowercase_strings),
@@ -340,7 +339,7 @@ mod tests {
     #[test]
     fn TEST_string_is_truthy_WHITESPACE_PADDED_1() {
         macro_rules! assert_stock_truthy {
-            ($s : expr, $truthy : expr, $truey : expr, $falsey : expr) => {
+            ($s:expr, $truthy:expr, $truey:expr, $falsey:expr) => {
                 assert_eq!($truthy, string_is_truthy($s), "string_is_truthy({:?})", $s);
                 assert_eq!($truey, string_is_truey($s), "string_is_truey({:?})", $s);
                 assert_eq!($falsey, string_is_falsey($s), "string_is_falsey({:?})", $s);

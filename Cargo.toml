@@ -28,7 +28,7 @@ name = "to-be"
 readme = "README.md"
 repository = "https://github.com/synesissoftware/to-be.Rust"
 rust-version = "1.74"
-version = "0.0.7"
+version = "0.0.8"
 
 
 # ##########################################################
