@@ -5,16 +5,43 @@ use crate::{
     Terms,
 };
 
+fn conditional_trim_(s : &str) -> (
+    &str, // s
+    bool, // was_trimmed
+) {
+    let l = s.len();
+
+    if l > 1 {
+
+        let b_0 = s.as_bytes()[0];
+
+        if b_0.is_ascii_whitespace() {
+
+            return (s.trim(), true)
+        }
+
+        let b_l = s.as_bytes()[l - 1];
+
+        if b_l.is_ascii_whitespace() {
+
+            return (s.trim(), true)
+        }
+    }
+
+    (s, false)
+}
+
 fn string_is_truthy_against_(
     s : &str,
     sorted_precise_strings : &[&str],
     lowercase_strings : &[&str],
 ) -> bool {
-    let s = s.trim();
+    let (s, was_trimmed) = conditional_trim_(s);
 
     if sorted_precise_strings.binary_search(&s).is_ok() {
         true
     } else {
+        let s = if was_trimmed { s} else { s.trim()};
         let l = s.to_ascii_lowercase();
 
         lowercase_strings.iter().any(|&f| f == l)
@@ -29,7 +56,7 @@ fn string_is_truthy_with_(
     stock_truey_sorted_precise_strings : &[&str],
     stock_truey_lowercase_strings : &[&str],
 ) -> Option<bool> {
-    let s = s.trim();
+    let (s, was_trimmed) = conditional_trim_(s);
 
     match terms {
         Terms::Default => {
@@ -54,6 +81,7 @@ fn string_is_truthy_with_(
         },
     };
 
+    let s = if was_trimmed { s} else { s.trim()};
     let l = s.to_ascii_lowercase();
     let (falsey_lowercase_strings, truey_lowercase_strings) = match terms {
         Terms::Default => (stock_falsey_lowercase_strings, stock_truey_lowercase_strings),
