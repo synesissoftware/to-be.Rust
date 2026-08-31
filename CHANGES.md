@@ -1,4 +1,4 @@
-# **to-be.Rust** Changes
+# to-be.Rust - Changes <!-- omit in toc -->
 
 ## 0.0.8 - 29th June 2026
 
