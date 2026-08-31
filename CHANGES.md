@@ -1,4 +1,13 @@
-# **to-be.Rust** Changes
+# to-be.Rust - Changes <!-- omit in toc -->
+
+
+## 0.0.9 - 31st August 2026
+
+* aligned **.github/workflows/ci.yml** with the canonical branch, permission, locked feature, toolchain, and release checks;
+* added **DOC_76**, **RUST_TEST_NAMING**, and **DERIVE_LAYOUT** repository checkers, together with AsStr feature coverage;
+* added **EXAMPLES.md** and **NEWS.md**, and aligned README terminology, crate documentation, docs.rs configuration, and package contents;
+* updated the **base-traits** 0.1.x dependency, refreshed **Cargo.lock**, and pinned nightly formatter policy;
+
 
 ## 0.0.8 - 29th June 2026
 
@@ -7,9 +16,9 @@
 * extended **benches/string_truthy** Criterion benchmarks (custom `Terms`, padded stock inputs);
 
 
-## 0.0.7 - 27th June 2025
+## 0.0.7 - 27th June 2026
 
-* upgraded CI (clippy, rustfmt, MSRV job, optional-feature test matrix);
+* upgraded CI (Clippy, rustfmt, MSRV job, optional-feature test matrix);
 * added crate-level rustdoc;
 * aligned **rustfmt.toml** with **Diagnosticism.Rust** / SIS conventions;
 * added **benches/string_truthy** Criterion benchmark;
@@ -18,42 +27,42 @@
 * added `os_string_is_truthy()` (fixes missing symbol for `OsStr` / `OsString` features);
 * expanded tests (stock tables, `CStr`, non-UTF-8 `OsStr`, `stock_term_strings()`);
 * added compile-time error when incompatible `Truthy` implementation features are combined;
-* README and **Cargo.toml** documentation improvements;
+* improved **README.md** and **Cargo.toml** documentation;
 
 
 ## 0.0.6 - 1st September 2025
 
-* GitHub Actions;
-* documentation;
-* badges;
-* .gitattributes;
+* added GitHub Actions;
+* added documentation;
+* added badges;
+* added **.gitattributes**;
 
 
 ## 0.0.5 - 10th August 2025
 
-* added conditional-support for `CStr`, `CString`, `OsStr`, `OsString`;
+* added conditional support for `CStr`, `CString`, `OsStr`, and `OsString`;
 
 
 ## 0.0.4 - 10th August 2025
 
-* expanded and improved implementations of `Truthy` trait;
+* expanded and improved implementations of the `Truthy` trait;
 
 
 ## 0.0.3 - 10th August 2025
 
-* clippy;
+* added Clippy checks;
 
 
 ## 0.0.2 - 10th August 2025
 
-* added `#is_truthy()` to `Truthy` trait;
+* added `#is_truthy()` to the `Truthy` trait;
 * added `get_stock_terms()`;
-* project boilerplate;
+* added project boilerplate;
 
 
 ## 0.0.1 - 10th August 2025
 
-* first release of API (`string_is_falsey()`, `string_is_truey()`, `string_is_truthy()`, `string_is_truthy_with()`, `Terms`, `Truthy`);
+* released the initial API (`string_is_falsey()`, `string_is_truey()`, `string_is_truthy()`, `string_is_truthy_with()`, `Terms`, and `Truthy`);
 
 
 

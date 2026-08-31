@@ -14,4 +14,20 @@ where
 }
 
 
+#[cfg(test)]
+mod tests {
+    #![allow(non_snake_case)]
+
+    use crate::truthy::Truthy as _;
+
+
+    #[test]
+    fn TEST_AsStr_Truthy() {
+        assert_eq!(Some(true), "yes".is_truthy());
+        assert_eq!(Some(false), "no".is_truthy());
+        assert_eq!(None, "maybe".is_truthy());
+    }
+}
+
+
 // ///////////////////////////// end of file //////////////////////////// //

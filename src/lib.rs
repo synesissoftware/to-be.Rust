@@ -1,4 +1,4 @@
-//! Simple truthy/falsy string evaluation for Rust — part of the
+//! Simple truthy/falsey string evaluation for Rust — part of the
 //! cross-language **to-be** family.
 //!
 //! **to-be** classifies strings commonly found in configuration and
@@ -49,11 +49,11 @@
 //! # Examples
 //!
 //! ```
-//! use to_be::Truthy as _;
+//! use to_be::string_is_truthy;
 //!
-//! assert_eq!(Some(false), "no".is_truthy());
-//! assert_eq!(Some(true), "True".is_truthy());
-//! assert_eq!(None, "orange".is_truthy());
+//! assert_eq!(Some(false), string_is_truthy("no"));
+//! assert_eq!(Some(true), string_is_truthy("True"));
+//! assert_eq!(None, string_is_truthy("orange"));
 //! ```
 //!
 //! Further examples are provided in the repository **examples** directory

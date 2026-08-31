@@ -1,13 +1,13 @@
 // terms.rs
 
-/// Directs custom truthyness behaviour.
+/// Directs custom truthiness behaviour.
 #[derive(Clone)]
 #[derive(Debug)]
 pub enum Terms<'a> {
     /// Use the built-in comparison strings.
     Default,
     /// Use the given `*precise_strings` and, optionally, the given
-    /// `*lower_strings` to evaluate the truthyness of a given string.
+    /// `*lower_strings` to evaluate the truthiness of a given string.
     Strings {
         /// Precise (trimmed, case-sensitive) strings deemed "falsey".
         falsey_precise_strings :   &'a [&'a str],

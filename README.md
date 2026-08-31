@@ -1,5 +1,8 @@
 # to-be.Rust <!-- omit in toc -->
 
+Simple Rust library determining whether strings are truthy, that is whether
+they indicate *truey* or *falsey* values.
+
 ![Language](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![GitHub release](https://img.shields.io/github/v/release/synesissoftware/to-be.Rust.svg)](https://github.com/synesissoftware/to-be.Rust/releases/latest)
@@ -8,8 +11,6 @@
 ![MSRV](https://img.shields.io/badge/MSRV-1.74-lightgrey)
 [![CI](https://github.com/synesissoftware/to-be.Rust/actions/workflows/ci.yml/badge.svg)](https://github.com/synesissoftware/to-be.Rust/actions/workflows/ci.yml)
 [![docs.rs](https://docs.rs/to-be/badge.svg)](https://docs.rs/to-be)
-
-Simple Rust library determining the truthyness of strings, that is whether they indicate *truey* or *falsey* values.
 
 
 ## Table of Contents <!-- omit in toc -->
@@ -26,23 +27,27 @@ Simple Rust library determining the truthyness of strings, that is whether they 
   - [Structures](#structures)
   - [Traits](#traits)
 - [Examples](#examples)
+  - [Benchmarks](#benchmarks)
 - [Project Information](#project-information)
   - [Where to get help](#where-to-get-help)
   - [Contribution guidelines](#contribution-guidelines)
   - [Dependencies](#dependencies)
-    - [Dev Dependencies](#dev-dependencies)
+    - [Efferent (fan-out)](#efferent-fan-out)
+      - [Runtime Dependencies](#runtime-dependencies)
+      - [Development Dependencies](#development-dependencies)
+    - [Afferent (fan-in)](#afferent-fan-in)
   - [Related projects](#related-projects)
   - [License](#license)
 
 
 ## Introduction
 
-**to-be** is a library providing facilities for determining whether the truthyness of strings. It is implemented in several languages: **to-be.Rust** is the **Rust** implementation.
+**to-be** is a library providing facilities for determining the truthiness of strings. It is implemented in several languages: **to-be.Rust** is the **Rust** implementation.
 
 
 ## Terminology
 
-The term "*truthy*" is an unhelpfully overloaded term in the programming world, insofar as it is used to refer to the notion of "truthyness" - whether something can be _deemed to be_ interpretable as truth - and also the true side of that interpretation. In this library, the former interpretation is used, leaving us with the following terms:
+The term "*truthy*" is an unhelpfully overloaded term in the programming world, insofar as it is used to refer to the notion of "truthiness" - whether something can be _deemed to be_ interpretable as truth - and also the true side of that interpretation. In this library, the former interpretation is used, leaving us with the following terms:
 
 * "*truthy*" - whether something can be _deemed to be_ interpretable as having truth;
 * "*falsey*" - whether an object can be _deemed to be_ interpretable as being false;
@@ -50,7 +55,7 @@ The term "*truthy*" is an unhelpfully overloaded term in the programming world, 
 
 For example, consider the following **Rust** program:
 
-```Rust
+```rust
 use to_be::Truthy as _;
 
 let s1 = "no";
@@ -79,7 +84,7 @@ assert_eq!(false, s3.is_truey());
 Reference in **Cargo.toml** in the usual way:
 
 ```toml
-to-be = { version = "0" }
+to-be = { version = "0.0" }
 ```
 
 
@@ -94,7 +99,7 @@ No public constants are defined at this time.
 
 The following public enumeration is defined in the current version:
 
-```Rust
+```rust
 #[derive(Clone)]
 #[derive(Debug)]
 pub enum Terms<'a> {
@@ -117,6 +122,7 @@ The following optional **Cargo.toml** features are defined:
 
 * `null-feature` - a feature that has no effect (and, thus, is useful for simplifying driver scripts);
 * `implement-Truthy-for-AsStr` - implements [`Truthy`] for all types that implement `AsStr` from [**base-traits**](https://github.com/synesissoftware/base-traits). **NOTE:** this is incompatible with the other `implement-Truthy-for-*` features;
+* `implement-Truthy-for-most` - enables the concrete-type `Truthy` implementations for `bool`, `CStr`, `CString`, `OsStr`, `OsString`, `&str`, and `String`;
 * `implement-Truthy-for-bool` - implements [`Truthy`] for `bool` (enabled by default);
 * `implement-Truthy-for-CStr` - implements [`Truthy`] for `CStr`;
 * `implement-Truthy-for-CString` - implements [`Truthy`] for `CString`;
@@ -130,7 +136,7 @@ The following optional **Cargo.toml** features are defined:
 
 The following public functions are defined in the current version:
 
-```Rust
+```rust
 /// Indicates that the given string, when trimmed, is deemed as "falsey".
 pub fn string_is_falsey(s : &str) -> bool;
 /// Indicates that the given string, when trimmed, is deemed as "truey".
@@ -169,7 +175,7 @@ No public structures are defined at this time.
 
 The following public traits are defined in the current version:
 
-```Rust
+```rust
 pub trait Truthy {
     /// Indicates whether the instance can be classed as "falsey".
     fn is_falsey(&self) -> bool {
@@ -228,14 +234,29 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 ### Dependencies
 
-Crates upon which **to-be.Rust** has runtime dependencies:
+
+#### Efferent (fan-out)
+
+Libraries upon which **to-be.Rust** depends:
+
+##### Runtime Dependencies
 
 * [**base-traits**](https://github.com/synesissoftware/base-traits);
 
 
-#### Dev Dependencies
+##### Development Dependencies
 
 * [**criterion**](https://github.com/bheisler/criterion.rs) (benchmarking only);
+
+The committed **Cargo.lock** is retained for reproducible development and CI
+builds; locked Cargo commands are used throughout the workflow.
+
+
+#### Afferent (fan-in)
+
+Projects that depend on **to-be.Rust**:
+
+None currently.
 
 
 ### Related projects
