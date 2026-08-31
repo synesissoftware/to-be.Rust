@@ -5,21 +5,26 @@ on:
     branches:
       - master
       - dev
-      - gha
       - boilerplate
+      - idiomatic
+      - rc1
+      - rc2
+      - rc3
   pull_request:
-    branches:
-      - master
-      - dev
-      - gha
-      - boilerplate
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
 
 env:
   CARGO_TERM_COLOR: always
 
 jobs:
   check:
-    name: Test, Clippy, Fmt
+    name: Test, Clippy, Docs, Examples, Fmt, Checkers, Package
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,26 +33,69 @@ jobs:
         with:
           components: clippy
 
-      - name: Install nightly rustfmt
-        run: rustup toolchain install nightly --profile minimal --component rustfmt
+      - name: Install pinned nightly rustfmt
+        run: rustup toolchain install nightly-2026-08-08 --profile minimal --component rustfmt
 
       - uses: Swatinem/rust-cache@v2
 
-      - name: cargo test
-        run: cargo test
+      - name: cargo test (all targets)
+        run: cargo test --all-targets --locked
 
-      - name: cargo test (optional Truthy features)
+      - name: cargo test (no default features)
         run: >
-          cargo test --lib
+          cargo test
           --no-default-features
-          --features
-          "implement-Truthy-for-most"
+          --locked
+
+      - name: cargo test (implement-Truthy-for-most)
+        run: >
+          cargo test
+          --no-default-features
+          --features implement-Truthy-for-most
+          --locked
+
+      - name: cargo test (implement-Truthy-for-AsStr)
+        run: >
+          cargo test
+          --no-default-features
+          --features implement-Truthy-for-AsStr
+          --locked
+
+      - name: cargo test (null-feature)
+        run: cargo test --features null-feature --locked
+
+      - name: incompatible Truthy implementation features
+        run: |
+          if cargo check --lib --no-default-features \
+              --features "implement-Truthy-for-AsStr,implement-Truthy-for-str" \
+              --locked; then
+            echo "error: incompatible features unexpectedly compiled"
+            exit 1
+          fi
 
       - name: cargo clippy
-        run: cargo clippy --all-targets -- -D warnings
+        run: cargo clippy --all-targets --locked -- -D warnings
+
+      - name: cargo doc
+        run: RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --locked
+
+      - name: cargo build (example)
+        run: cargo build --example truthy_strings --locked
 
       - name: rustfmt
         run: ./scripts/fmt --check
+
+      - name: DOC_76 checker
+        run: python3 scripts/check_doc_76.py
+
+      - name: RUST_TEST_NAMING checker
+        run: python3 scripts/check_test_names.py
+
+      - name: DERIVE_LAYOUT checker
+        run: python3 scripts/check_derives.py
+
+      - name: cargo publish (dry run)
+        run: cargo publish --dry-run --locked
 
   msrv:
     name: MSRV (1.74)

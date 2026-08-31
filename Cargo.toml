@@ -13,9 +13,18 @@ categories = [
 	"parsing",
 	"text-processing",
 ]
-description = "Simple Rust library determining whether strings indicate truey or falsy values"
+description = "Simple Rust library determining whether strings indicate truey or falsey values"
 documentation = "https://docs.rs/to-be"
 edition = "2021"
+exclude = [
+	".cargo",
+	".cursor",
+	".github",
+	".vimrc",
+	".vscode",
+	"scripts",
+	"target",
+]
 homepage = "https://github.com/synesissoftware/to-be.Rust"
 keywords = [
 	"configuration",
@@ -28,7 +37,14 @@ name = "to-be"
 readme = "README.md"
 repository = "https://github.com/synesissoftware/to-be.Rust"
 rust-version = "1.74"
-version = "0.0.8"
+version = "0.0.9"
+
+# docs.rs builds the complete concrete-type API; the AsStr implementation
+# cannot be combined with the concrete-type implementation features.
+[package.metadata.docs.rs]
+features = [
+	"implement-Truthy-for-most",
+]
 
 
 # ##########################################################
@@ -105,7 +121,7 @@ implement-Truthy-for-String = []
 
 [dependencies]
 
-base-traits = { version = "0", default-features = false, features = [
+base-traits = { version = ">=0.1.2, <1.0.0", default-features = false, features = [
 	"implement-AsStr-for-built_ins",
 ]}
 

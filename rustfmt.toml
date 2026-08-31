@@ -1,15 +1,16 @@
 
 # rustfmt.toml for to-be.Rust
 #
-# Requires nightly rustfmt with unstable features enabled, e.g.:
+# Requires pinned nightly rustfmt with unstable features enabled, e.g.:
 #
 #   ./scripts/fmt
 #
 # Or:
 #
-#   RUSTFMT="$(rustup which --toolchain nightly rustfmt)" cargo fmt -- --unstable-features
+#   RUSTFMT="$(rustup which --toolchain nightly-2026-08-08 rustfmt)" cargo fmt -- --unstable-features
 #
-# configured for cargo-fmt 1.96.0-nightly
+# configured for cargo-fmt 1.96.0-nightly; scripts/fmt allows overriding
+# the toolchain with RUSTFMT_TOOLCHAIN when required
 
 # array_width=60 # deprecated
 # attr_fn_like_width=70 # deprecated

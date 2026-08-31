@@ -1,6 +1,6 @@
 // terms.rs
 
-/// Directs custom truthyness behaviour.
+/// Directs custom truthiness behaviour.
 #[derive(Clone)]
 #[derive(Debug)]
 pub enum Terms<'a> {
