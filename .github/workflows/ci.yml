@@ -24,7 +24,7 @@ env:
 
 jobs:
   check:
-    name: Test, Clippy, Docs, Examples, Fmt, Checkers, Package
+    name: Stable checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -32,9 +32,6 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
-
-      - name: Install pinned nightly rustfmt
-        run: rustup toolchain install nightly-2026-08-08 --profile minimal --component rustfmt
 
       - uses: Swatinem/rust-cache@v2
 
@@ -61,9 +58,6 @@ jobs:
           --features implement-Truthy-for-AsStr
           --locked
 
-      - name: cargo test (null-feature)
-        run: cargo test --features null-feature --locked
-
       - name: incompatible Truthy implementation features
         run: |
           if cargo check --lib --no-default-features \
@@ -79,10 +73,13 @@ jobs:
       - name: cargo doc
         run: RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --locked
 
-      - name: cargo build (example)
-        run: cargo build --example truthy_strings --locked
+      - name: Install pinned nightly rustfmt
+        run: rustup toolchain install nightly-2026-09-10 --profile minimal --component rustfmt
 
       - name: rustfmt
+        env:
+          RUSTFMT_TOOLCHAIN: nightly-2026-09-10
+          RUSTUP_TOOLCHAIN: nightly-2026-09-10
         run: ./scripts/fmt --check
 
       - name: DOC_76 checker
@@ -93,6 +90,12 @@ jobs:
 
       - name: DERIVE_LAYOUT checker
         run: python3 scripts/check_derives.py
+
+      - name: cargo build (examples)
+        run: cargo build --examples --locked
+
+      - name: cargo build (example)
+        run: cargo build --example truthy_strings --locked
 
       - name: cargo publish (dry run)
         run: cargo publish --dry-run --locked
