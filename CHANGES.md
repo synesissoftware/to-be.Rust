@@ -1,6 +1,16 @@
 # to-be.Rust - Changes <!-- omit in toc -->
 
 
+## 0.0.10 - 12th September 2026
+
+* removed the Rust-specific Cursor rule superseded by shared workspace standards;
+* strengthened CI with stable checks, pinned nightly formatting, example builds, and package validation;
+* refreshed repository metadata, editor configuration, ignore rules, and Rust formatting configuration;
+* added the **versions** example and excluded development-only files from published packages;
+* documented the MSRV and canonicalised **Cargo.toml** feature and dependency metadata;
+* improved the test-name checker and refreshed the formatting driver;
+
+
 ## 0.0.9 - 31st August 2026
 
 * aligned **.github/workflows/ci.yml** with the canonical branch, permission, locked feature, toolchain, and release checks;
